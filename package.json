@@ -1,6 +1,6 @@
 {
   "name": "js-beautify-sourcemap",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "js-beautify with sourcemap",
   "main": "dist/js-beautify-sourcemap.js",
   "module": "dist/js-beautify-sourcemap.es.js",
@@ -26,7 +26,7 @@
   "homepage": "https://github.com/joeyguo/js-beautify-sourcemap#readme",
   "dependencies": {
     "js-beautify": "^1.6.14",
-    "js-sourcemap": "0.0.3"
+    "js-sourcemap": "0.0.6"
   },
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.18.0",

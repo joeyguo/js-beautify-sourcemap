@@ -1,5 +1,5 @@
 /**
- * js-beautify-sourcemap v0.0.6 By joeyguo
+ * js-beautify-sourcemap v0.0.7 By joeyguo
  * HomePage: https://github.com/joeyguo/js-beautify-sourcemap#readme
  * MIT Licensed.
  */
@@ -4163,7 +4163,7 @@ if (typeof undefined === "function" && undefined.amd) {
 });
 
 /**
- * js-sourcemap v0.0.3 By joeyguo
+ * js-sourcemap v0.0.6 By joeyguo
  * HomePage: https://github.com/joeyguo/js-sourcemap
  * MIT Licensed.
  */
