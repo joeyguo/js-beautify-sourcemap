@@ -1,0 +1,42 @@
+{
+  "name": "js-beautify-sourcemap",
+  "version": "0.0.5",
+  "description": "js-beautify with sourcemap",
+  "main": "dist/js-beautify-sourcemap.js",
+  "module": "dist/js-beautify-sourcemap.es.js",
+  "scripts": {
+    "build": "npm run dist&npm run es&npm run min",
+    "dist": "rollup -c",
+    "es": "rollup -c",
+    "min": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeyguo/js-beautify-sourcemap.git"
+  },
+  "keywords": [
+    "js-beautify",
+    "sourcemap"
+  ],
+  "author": "joeyguo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joeyguo/js-beautify-sourcemap/issues"
+  },
+  "homepage": "https://github.com/joeyguo/js-beautify-sourcemap#readme",
+  "dependencies": {
+    "js-beautify": "^1.6.14",
+    "js-sourcemap": "0.0.3"
+  },
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babelrc-rollup": "^3.0.0",
+    "rollup": "^0.37.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-license": "^0.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^1.0.1"
+  }
+}
