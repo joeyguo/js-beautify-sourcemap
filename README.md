@@ -2,14 +2,32 @@
 
 js-beautify, sourcemap support
 
-# Usage
+## Install
+
+```sh
+npm install js-beautify-sourcemap
+```
+
+or use CDN
+
+- https://unpkg.com/js-beautify-sourcemap/dist/js-beautify-sourcemap.min.js
+
+
+## Usage
 
 ```js
 import jsbs from 'js-beautify-sourcemap';
-// or use cdn: https://unpkg.com/js-beautify-sourcemap/dist/js-beautify-sourcemap.min.js
+// use cdn, window.jsbs
 
-var obj = jsbs(source, opts, loc);
+var src = `function test(){console.log(js-sourcemap)};`;
 
+// var obj = jsbs(source, opts, loc);
+var obj = jsbs(src, {}, {
+                            line: 1,
+                            column: 28
+                        });
+                        
+console.log(obj);
 /*
 obj
 {

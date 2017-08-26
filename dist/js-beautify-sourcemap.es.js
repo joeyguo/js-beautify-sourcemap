@@ -1,5 +1,5 @@
 /**
- * js-beautify-sourcemap v0.0.7 By joeyguo
+ * js-beautify-sourcemap v0.0.8 By joeyguo
  * HomePage: https://github.com/joeyguo/js-beautify-sourcemap#readme
  * MIT Licensed.
  */
@@ -10882,14 +10882,16 @@ function consumer(sourcemap) {
 
 function jsbs(res) {
     var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var line = arguments[2];
-    var column = arguments[3];
+    var loc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     var dist = js(res, opts),
         sm = generator(res, dist),
         smConsumer = consumer(sm);
 
-    var loc = line !== undefined && column !== undefined && smConsumer.getGenerated({
+    var line = loc.line,
+        column = loc.column;
+
+    var locRes = line !== undefined && column !== undefined && smConsumer.getGenerated({
         line: line,
         column: column
     }) || {};
@@ -10897,8 +10899,8 @@ function jsbs(res) {
     return {
         code: dist,
         loc: {
-            line: loc.line,
-            column: loc.column
+            line: locRes.line,
+            column: locRes.column
         },
         sourcemap: sm
     };
