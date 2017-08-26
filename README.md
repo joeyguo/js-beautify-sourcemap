@@ -6,6 +6,7 @@ js-beautify, sourcemap support
 
 ```js
 import jsbs from 'js-beautify-sourcemap';
+// or use cdn: https://unpkg.com/js-beautify-sourcemap/dist/js-beautify-sourcemap.min.js
 
 var obj = jsbs(source, opts, loc);
 
@@ -22,14 +23,11 @@ obj
 */
 ```
 
-- source 
-js code
+- source - js code
 
-- opts 
-the same as [js-beautify](https://github.com/beautify-web/js-beautify)
+- opts - the same as [js-beautify](https://github.com/beautify-web/js-beautify)
 
-- loc 
-source's loc, to get target's loc
+- loc - source's loc, to get target's loc
 ```
 {
     line, 
@@ -38,4 +36,7 @@ source's loc, to get target's loc
 ```
 
 
-Thanks to js-beautify
+### Thanks to 
+
+- js-beautify
+- js-sourcemap
