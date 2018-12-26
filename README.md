@@ -5,6 +5,7 @@ js-beautify, sourcemap support
 # Usage
 
 ## as Command line tools
+输入压缩代码文件的地址及行列数，输出格式化后的代码文件及行列数
 
 ### 全局安装
 ```sh
