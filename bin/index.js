@@ -117,7 +117,8 @@ function getDate(filepath, callback) {
             })
             .catch(function(error) {
                 console.error(
-                    '\nUnable to download the specified file. Please check your path. \n'
+                    '\nUnable to download the specified file. Please check your path. \n',
+                    error
                 );
             });
     }
