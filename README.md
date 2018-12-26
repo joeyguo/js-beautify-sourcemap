@@ -2,36 +2,39 @@
 
 js-beautify, sourcemap support
 
-## Install
+# Usage
+
+## as Command line tools
+
+### 全局安装
+```sh
+npm i -g js-beautify-sourcemap
+```
+
+### 设置输出文件的目录（已设置可跳过）
+```sh
+# 设置输出文件的目录（已设置可跳过）
+jsbs config -o <outputDir>
+```
+
+### 开始执行
+```sh
+# filepath 为压缩文件的路径，支持线上文件url，也支持本地文件路径
+
+jsbs <filepath> -l <row:column>
+```
+
+### example
+```sh
+jsbs https://s1.xx.com/a.xsaf.js -l 1:20
+```
+
+## as Modules
 
 ```sh
 npm install js-beautify-sourcemap
 ```
 
-or use CDN
-
-- https://unpkg.com/js-beautify-sourcemap/dist/js-beautify-sourcemap.min.js
-
-
-## Usage
-
-# as Command line tools
-```sh
-# 安装
-npm i -g js-beautify-sourcemap
-
-# 设置输出文件的目录（已设置可跳过）
-jsbs config -o <outputDir>
-
-# 开始执行
-# filepath 为压缩文件的路径，支持线上文件url，也支持本地文件路径
-jsbs <filepath> -l <row:column>
-
-eg: 
-jsbs https://s1.xx.com/a.xsaf.js -l 1:20
-```
-
-# as Modules
 ```js
 import jsbs from 'js-beautify-sourcemap';
 // use cdn, window.jsbs
@@ -46,11 +49,11 @@ var obj = jsbs(src, {}, {
 console.log(obj);
 
 ```
-# API
+### API
 
 var obj = jsbs(source, opts, loc);
 
-## input
+### input
 
 - source - js code
 
@@ -64,7 +67,7 @@ var obj = jsbs(source, opts, loc);
 }
 ```
 
-## output
+### output
 
 - obj
 ```
