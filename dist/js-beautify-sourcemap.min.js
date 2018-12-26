@@ -1,5 +1,5 @@
 /**
- * js-beautify-sourcemap v0.0.9 By joeyguo
+ * js-beautify-sourcemap v0.2.0 By joeyguo
  * HomePage: https://github.com/joeyguo/js-beautify-sourcemap#readme
  * MIT Licensed.
  */
