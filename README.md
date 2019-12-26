@@ -43,10 +43,9 @@ import jsbs from 'js-beautify-sourcemap';
 var src = `function test(){console.log(js-sourcemap)};`;
 
 var obj = jsbs(src, {}, {
-                            line: 1,
-                            column: 28
-                        });
-                        
+    line: 1,
+    column: 28
+});  
 console.log(obj);
 
 ```
@@ -61,7 +60,8 @@ var obj = jsbs(source, opts, loc);
 - opts - the same as [js-beautify](https://github.com/beautify-web/js-beautify)
 
 - loc - source's loc, to get target's loc
-```
+
+```js
 {
     line, 
     column
@@ -71,7 +71,8 @@ var obj = jsbs(source, opts, loc);
 ### output
 
 - obj
-```
+
+```js
 {
     code,      // js-beautify code
     loc: {     // target's loc
