@@ -1,5 +1,5 @@
 /**
- * js-beautify-sourcemap v0.2.0 By joeyguo
+ * js-beautify-sourcemap v1.0.0 By joeyguo
  * HomePage: https://github.com/joeyguo/js-beautify-sourcemap#readme
  * MIT Licensed.
  */
@@ -6736,27 +6736,32 @@ function consumer(sourcemap) {
 
 var beautify = require('js-beautify');
 
-function jsbs(res) {
+/**
+ * 通过压缩代码及行列位置 获取 对应格式化后的代码、行列位置、sourcemap 文件
+ *
+ * @param {*} uglyCode 压缩代码
+ * @param {*} [opts={}] 格式化相关参数
+ * @param {*} { line, column } 压缩代码的行列数
+ * @returns
+ */
+function jsbs(uglyCode) {
     var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var loc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var _ref = arguments[2];
+    var line = _ref.line,
+        column = _ref.column;
 
-    var dist = beautify(res, opts),
-        sm = generator(res, dist),
-        smConsumer = consumer(sm);
-
-    var line = loc.line,
-        column = loc.column;
-
-
-    var locRes = line !== undefined && column !== undefined && smConsumer.getGenerated({ line: line, column: column }) || {};
+    var formattedCode = beautify(uglyCode, opts);
+    var sourcemap = generator(uglyCode, formattedCode);
+    var smConsumer = consumer(sourcemap);
+    var result = smConsumer.getGenerated({ line: line, column: column });
 
     return {
-        code: dist,
+        code: formattedCode,
+        sourcemap: sourcemap,
         loc: {
-            line: locRes.line,
-            column: locRes.column
-        },
-        sourcemap: sm
+            line: result.line,
+            column: result.column
+        }
     };
 }
 

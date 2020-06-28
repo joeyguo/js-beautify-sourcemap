@@ -1,27 +1,19 @@
 # js-beautify-sourcemap
 
-js-beautify, sourcemap support
+通过压缩代码及行列位置 获取 对应格式化后的代码、行列位置、sourcemap 文件
 
 # Usage
 
 ## as Command line tools
-输入压缩代码文件的地址及行列数，输出格式化后的代码文件及行列数
 
 ### 全局安装
 ```sh
 npm i -g js-beautify-sourcemap
 ```
 
-### 设置输出文件的目录（已设置可跳过）
-```sh
-# 设置输出文件的目录（已设置可跳过）
-jsbs config -o <outputDir>
-```
-
 ### 开始执行
 ```sh
-# filepath 为压缩文件的路径，支持线上文件url，也支持本地文件路径
-
+# filepath 为压缩文件的路径 (本地文件路径 / 线上文件 Url)
 jsbs <filepath> -l <row:column>
 ```
 
@@ -38,20 +30,18 @@ npm install js-beautify-sourcemap
 
 ```js
 import jsbs from 'js-beautify-sourcemap';
-// use cdn, window.jsbs
 
-var src = `function test(){console.log(js-sourcemap)};`;
-
-var obj = jsbs(src, {}, {
+const uglyCode = `function test(){console.log(js-sourcemap)};`;
+const reuslt = jsbs(uglyCode, {}, {
     line: 1,
     column: 28
 });  
-console.log(obj);
-
+console.log(reuslt);
 ```
+
 ### API
 
-var obj = jsbs(source, opts, loc);
+var reuslt = jsbs(source, opts, loc);
 
 ### input
 

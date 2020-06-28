@@ -1,25 +1,28 @@
 import { generator, consumer } from 'js-sourcemap';
 const beautify = require('js-beautify');
 
-export default function jsbs(res, opts = {}, loc = {}) {
-    let dist = beautify(res, opts),
-        sm = generator(res, dist),
-        smConsumer = consumer(sm);
-
-    let { line, column } = loc;
-
-    let locRes =
-        (line !== undefined &&
-            column !== undefined &&
-            smConsumer.getGenerated({ line, column })) ||
-        {};
+/**
+ * 通过压缩代码及行列位置 获取 对应格式化后的代码、行列位置、sourcemap 文件
+ *
+ * @param {*} uglyCode 压缩代码
+ * @param {*} [opts={}] 格式化相关参数
+ * @param {*} { line, column } 压缩代码的行列数
+ * @returns
+ */
+function jsbs(uglyCode, opts = {}, { line, column }) {
+    const formattedCode = beautify(uglyCode, opts);
+    const sourcemap = generator(uglyCode, formattedCode);
+    const smConsumer = consumer(sourcemap);
+    const result = smConsumer.getGenerated({ line, column });
 
     return {
-        code: dist,
+        code: formattedCode,
+        sourcemap: sourcemap,
         loc: {
-            line: locRes.line,
-            column: locRes.column,
+            line: result.line,
+            column: result.column,
         },
-        sourcemap: sm,
     };
 }
+
+export default jsbs;

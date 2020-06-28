@@ -4,124 +4,66 @@ const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs');
 const chalk = require('chalk');
-const jsbs = require('../dist/js-beautify-sourcemap');
-const pkg = require('../package.json');
 const axios = require('axios');
-const Configstore = require('configstore');
-const conf = new Configstore(pkg.name);
-let argv = yargs.argv,
-    _ = argv._;
+const os = require('os');
+const jsbs = require('../dist/js-beautify-sourcemap');
 
-argv = yargs
-    .option('location', {
-        alias: 'l',
-        describe: '行列数',
-    })
-    .option('output', {
-        alias: 'o',
-        describe: '输出的目录',
-    })
-    .option('filepath', {
-        alias: 'f',
-        describe: '输出的目录',
-    })
+const _ = yargs.argv._;
+
+const argv = yargs
+    .option('filepath', { alias: 'f', describe: '输入压缩文件路径' })
+    .option('location', { alias: 'l', describe: '压缩代码行列数 line:column' })
+    .option('output', { alias: 'o', describe: '输出的目录' })
     .version()
-    .command('config', 'config', function(yargs) {
-        var argv = yargs
-            .reset()
-            .option('output', {
-                alias: 'o',
-                description: '输出的目录',
-            })
-            .help('h')
-            .alias('h', 'help').argv;
+    .argv;
 
-        let output = argv.output;
-        console.log(output)
-        if (output) {
-            conf.set('output', output);
-            console.log('[set output directory]' + chalk.green(` ${output}`));
-        }
-    }).argv;
+const filepath = _[0] || argv.filepath;
 
-var filepath = _[0] || argv.filepath;
-
-if (filepath === 'config') {
-    return;
-} else if (!filepath) {
-    console.log('\n[error]: ' + 'path required!\n');
-    yargs.showHelp();
-    return;
+if (!filepath) {
+    console.error(chalk.red(`${filepath}(filepath) is not found`));
+    return yargs.showHelp();
 }
 
-var location = argv.location || '';
-var tmparr = location.split('_');
-if (tmparr.length !== 2) {
-    tmparr = location.split('-');
-    if (tmparr.length !== 2) {
-        tmparr = location.split(':');
-    }
-}
+const location = argv.location || '';
+const loc = location.split(':');
+const row = loc[0];
+const column = loc[1];
+if (!location || !row || !column) return console.error(chalk.red('location is not found. Please check your options'));
 
-var row = tmparr[0],
-    column = tmparr[1];
+const basename = path.basename(filepath, '.js');
+const output = path.join(argv.output || os.tmpdir(), 'jsbs-' + basename + '.js');
 
-var basename = path.basename(filepath, '.js');
-var output = path.join(conf.get('output'), 'jsbs-' + basename + '.js');
+console.log(`[input] ${chalk.yellow(`${filepath}`)} ${chalk.yellow(` line: ${row}, column: ${column}`)}`)
 
-// console.log('[filepath]' + chalk.yellow(` ${filepath}`))
-// console.log('[location]' + chalk.yellow(` ${row} column: ${column}`))
-
-function handler(data) {
-    var obj = jsbs(
-        data,
-        {},
-        {
-            line: row,
-            column: column,
-        }
-    );
-    fs.writeFile(output, obj.code, function(err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('[output]' + chalk.green(` ${output}`));
-            if (obj.loc && obj.loc.line) {
-                console.log(
-                    '[location]' +
-                        chalk.cyan(
-                            ` row: ${obj.loc.line} column: ${obj.loc.column}`
-                        )
-                );
-            }
-        }
-    });
-}
-
-function getDate(filepath, callback) {
+async function getData(filepath, callback) {
+    let data = '';
     try {
-        var stats = fs.lstatSync(filepath);
-        if (stats.isFile()) {
-            var data = fs.readFileSync(filepath, 'utf-8');
-            callback(data);
-        } else {
-            console.error(
-                '\nUnable to locate the source file. Please check your path.\n'
-            );
-        }
+        const stats = fs.lstatSync(filepath);
+        if (!stats.isFile()) return console.error('Unable to locate the source file. Please check your path.');
+        data = fs.readFileSync(filepath, 'utf-8');
     } catch (e) {
-        axios
+        data = await axios
             .get(filepath)
             .then(function(response) {
-                callback(response.data);
+                return response.data;
             })
             .catch(function(error) {
-                console.error(
-                    '\nUnable to download the specified file. Please check your path. \n',
-                    error
-                );
+                console.error( '\nUnable to download the specified file. Please check your path. \n', error);
             });
+    }
+
+    return data;
+}
+
+async function main() {
+    const data = await getData(filepath);
+    if (data) {
+        const obj = jsbs(data, {}, { line: row, column });
+        fs.writeFile(output, obj.code, function(err) {
+            if (err) return console.log(err);
+            console.log(`[output] ${chalk.green(`${output}`)} ${chalk.green(` line: ${obj.loc.line}, column: ${obj.loc.column}`)}`)
+        });
     }
 }
 
-getDate(filepath, handler);
+main();

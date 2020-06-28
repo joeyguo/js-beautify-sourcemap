@@ -1,6 +1,6 @@
 {
   "name": "js-beautify-sourcemap",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "js-beautify with sourcemap",
   "main": "dist/js-beautify-sourcemap.js",
   "module": "dist/js-beautify-sourcemap.es.js",

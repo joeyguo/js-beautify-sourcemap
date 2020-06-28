@@ -2,8 +2,9 @@
     <head>
         <meta charset="utf-8">
     </head>
-    <script src="../dist/js-beautify-sourcemap.min.js"></script>
+    <script src="../dist/js-beautify-sourcemap.js"></script>
     <script>
+        var src = 'function test(){console.log(js-sourcemap)};';
         var obj = jsbs(src, {}, {
             line: 1,
             column: 28
