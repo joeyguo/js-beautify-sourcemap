@@ -2,6 +2,9 @@
 
 通过压缩代码及行列位置 获取 对应格式化后的代码、行列位置、sourcemap 文件
 
+## 相关文章
+[《脚本错误量极致优化-定位压缩且无SourceMap文件的脚本错误》](https://github.com/joeyguo/blog/issues/23)
+
 # Usage
 
 ## as Command line tools
