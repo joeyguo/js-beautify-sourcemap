@@ -33,9 +33,9 @@ if (!location || !row || !column) return console.error(chalk.red('location is no
 const basename = path.basename(filepath, '.js');
 const output = path.join(argv.output || os.tmpdir(), 'jsbs-' + basename + '.js');
 
-console.log(`[input] ${chalk.yellow(`${filepath}`)} ${chalk.yellow(` line: ${row}, column: ${column}`)}`)
+console.log(`[input] ${chalk.yellow(filepath)} ${chalk.yellow(` line: ${row}, column: ${column}`)}`)
 
-async function getData(filepath, callback) {
+async function getData(filepath) {
     let data = '';
     try {
         const stats = fs.lstatSync(filepath);
@@ -61,7 +61,7 @@ async function main() {
         const obj = jsbs(data, {}, { line: row, column });
         fs.writeFile(output, obj.code, function(err) {
             if (err) return console.log(err);
-            console.log(`[output] ${chalk.green(`${output}`)} ${chalk.green(` line: ${obj.loc.line}, column: ${obj.loc.column}`)}`)
+            console.log(`[output] ${chalk.green(output)} ${chalk.green(` line: ${obj.loc.line}, column: ${obj.loc.column}`)}`)
         });
     }
 }
