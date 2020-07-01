@@ -22,7 +22,13 @@ jsbs <filepath> -l <row:column>
 
 ### example
 ```sh
-jsbs https://s1.xx.com/a.xsaf.js -l 1:20
+jsbs /Users/lazy-9340f8131b.js -l 1:1257
+```
+
+输出
+```sh
+[input] /Users/lazy-9340f8131b.js  line: 1, column: 1257 // 输入 压缩文件路径 及 行列位置
+[output] /var/jsbs-lazy-9340f8131b.js  line: 36, column: 50  // 输出 格式化文件路径 及 行列位置
 ```
 
 ## as Modules
